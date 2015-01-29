@@ -23,6 +23,11 @@ sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 echo "deb http://linux.dropbox.com/ubuntu $(lsb_release -cs) main" | \
     sudo tee /etc/apt/sources.list.d/dropbox.list
 
+# Add Chrome repo
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - `: Add repo key`
+
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' `: Set Repository`
+
 # Update package information
 sudo aptitude update
 
@@ -40,15 +45,17 @@ sudo aptitude install -y \
     vim \
     curl \
     dropbox \
-    etckeeper	': track changes to /etc' \
+    etckeeper	`: track changes to /etc` \
     git git-doc git-gui \
     gitk \
     make \
     openssh-server \
     p7zip-full p7zip-rar \
-    tree	': when ls is simply not enough' \
+    python-gpgme `: so Dropbox doesn\'t complain` \
+    tree	`: when ls is simply not enough` \
     vlc \
     wine \
+    google-chrome-stable \
     nodejs \
     npm \
     jasmine-node \
@@ -111,4 +118,4 @@ gsettings set org.gnome.desktop.media-handling automount-open false
 echo Settings without schema
 dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 32
 
-echo ************ END **************
+echo ################ END ##################
