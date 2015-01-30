@@ -56,6 +56,7 @@ sudo aptitude install -y \
     vlc \
     wine \
     google-chrome-stable \
+    wireshark \
     nodejs \
     npm \
     jasmine-node \
