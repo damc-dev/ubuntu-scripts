@@ -26,7 +26,15 @@ echo "deb http://linux.dropbox.com/ubuntu $(lsb_release -cs) main" | \
 # Add Chrome repo
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - `: Add repo key`
 
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' `: Set Repository`
+CHROME_SRC_LINE="deb http://dl.google.com/linux/chrome/deb/ stable main"
+CHROME_LIST_FILE="/etc/apt/sources.list.d/google-chrome.list"
+
+grep -q -F "$CHROME_SRC_LINE" $CHROME_LIST_FILE \
+	|| sudo sh -c echo $(echo "$CHROME_SRC_LINE" >> $CHROME_LIST_FILE) \
+		`: Set Repository if not already in file`
+
+# Add atom repo
+sudo add-apt-repository ppa:webupd8team/atom
 
 # Update package information
 sudo aptitude update
@@ -59,9 +67,21 @@ sudo aptitude install -y \
     wireshark \
     nodejs \
     npm \
-    jasmine-node \
+    atom \
     \
 
+# Update to run nodejs as node (since aptitude installs it as nodejs)
+sudo update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+
+# Update NPM
+sudo npm update
+
+# Install Nodejs packages
+sudo npm install -g \
+  bower \
+  grunt-cli \
+  nodemon \
+  jasmine-node \
 
 # Initialize apt-file's cache
 if ! ls /var/cache/apt/apt-file | grep -q .; then
