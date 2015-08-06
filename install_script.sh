@@ -36,6 +36,9 @@ grep -q -F "$CHROME_SRC_LINE" $CHROME_LIST_FILE \
 # Add atom repo
 sudo add-apt-repository ppa:webupd8team/atom
 
+# Add java repo
+sudo add-apt-repository ppa:webupd8team/atom
+
 # Update package information
 sudo aptitude update
 
@@ -68,6 +71,7 @@ sudo aptitude install -y \
     nodejs \
     npm \
     atom \
+    oracle-java8-installer \
     \
 
 # Update to run nodejs as node (since aptitude installs it as nodejs)
